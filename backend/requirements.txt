@@ -1,0 +1,27 @@
+# FastAPI and server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# LangChain and RAG
+langchain==0.1.0
+langchain-community==0.0.10
+langchain-core==0.1.10
+
+# Vector database
+chromadb==0.4.22
+
+# Document processing
+pypdf==3.17.4
+python-docx==1.1.0
+
+# Embeddings (using sentence-transformers for local embeddings)
+sentence-transformers==2.2.2
+
+# Utilities
+python-dotenv==1.0.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# For Ollama
+httpx==0.26.0
