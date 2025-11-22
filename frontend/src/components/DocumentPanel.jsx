@@ -82,6 +82,33 @@ function DocumentPanel({ documents, setDocuments }) {
     if (file) handleUpload(file);
   };
 
+  // Handle native file dialog for Electron
+  const handleNativeFileSelect = async () => {
+    if (window.electronAPI?.openFileDialog) {
+      const filePaths = await window.electronAPI.openFileDialog();
+      if (filePaths && filePaths.length > 0) {
+        // For Electron, we need to fetch the file from the path
+        // The backend will need to handle file paths differently
+        for (const filePath of filePaths) {
+          const filename = filePath.split('/').pop();
+          // Create a fetch request to read the local file
+          try {
+            const response = await fetch(`file://${filePath}`);
+            const blob = await response.blob();
+            const file = new File([blob], filename, { type: blob.type });
+            await handleUpload(file);
+          } catch (err) {
+            // Fallback: just use the file input
+            fileInputRef.current?.click();
+            break;
+          }
+        }
+      }
+    } else {
+      fileInputRef.current?.click();
+    }
+  };
+
   const formatFileSize = (bytes) => {
     if (bytes < 1024) return `${bytes} B`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
@@ -113,7 +140,7 @@ function DocumentPanel({ documents, setDocuments }) {
               ? 'border-blue-500 bg-blue-50'
               : 'border-gray-300 hover:border-gray-400'
           }`}
-          onClick={() => fileInputRef.current?.click()}
+          onClick={handleNativeFileSelect}
           onDragOver={(e) => {
             e.preventDefault();
             setDragOver(true);
