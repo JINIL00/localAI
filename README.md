@@ -36,7 +36,25 @@ A privacy-first, AI-powered document chat assistant that runs entirely on your l
 - **Frontend**: React, Vite, Tailwind CSS
 - **LLM**: Ollama with Llama 3.2 3B (modular - easy to swap models)
 
-## Quick Start
+## Mac App (Recommended for Non-Technical Users)
+
+For the easiest experience on Mac, use the native Electron app which handles all services automatically:
+
+```bash
+# Install dependencies and build the app
+./scripts/run-mac-app.sh install
+./scripts/run-mac-app.sh build
+```
+
+The built app will be in `electron/dist/`. Just double-click to run - no terminal required!
+
+**Prerequisites:** Install [Ollama](https://ollama.ai) and run `ollama pull llama3.2:3b` once.
+
+See [electron/README.md](electron/README.md) for detailed Mac app documentation.
+
+---
+
+## Quick Start (Manual Setup)
 
 ### Prerequisites
 
@@ -128,6 +146,12 @@ localai-document-chat/
 │   │   ├── services/      # API client
 │   │   └── App.jsx        # Main application
 │   └── package.json
+├── electron/              # Mac desktop app
+│   ├── main.js            # Electron main process
+│   ├── preload.js         # IPC bridge
+│   └── package.json       # Build configuration
+├── scripts/
+│   └── run-mac-app.sh     # Build/run helper script
 └── README.md
 ```
 
